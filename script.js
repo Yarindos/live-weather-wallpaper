@@ -44,25 +44,18 @@ function applyWeatherEffect(main) {
     else body.classList.add('weather-clear');
 }
 
+// Функція отримання погоди для Києва за замовчуванням
 function getLocation() {
-    if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(
-            (pos) => fetchWeather(pos.coords.latitude, pos.coords.longitude),
-            () => {
-                document.getElementById('city').textContent = "Київ (GPS недоступний)";
-                fetchWeather(50.4501, 30.5234); // Дефолт на Київ
-            }
-        );
-    } else {
-        document.getElementById('city').textContent = "Київ (GPS не підтримується)";
-        fetchWeather(50.4501, 30.5234);
-    }
+    // Вказуємо координати Києва напряму
+    const lat = 50.4501;
+    const lon = 30.5234;
+    fetchWeather(lat, lon);
 }
 
 // Початкове налаштування
 setInterval(updateClock, 1000);
 updateClock();
-getLocation();
+getLocation(); // Викликаємо одразу для Києва
 
 // Оновлювати погоду кожні 30 хвилин
 setInterval(getLocation, 30 * 60 * 1000);
