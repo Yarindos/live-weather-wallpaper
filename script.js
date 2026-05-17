@@ -38,10 +38,17 @@ function applyWeatherEffect(main) {
     const body = document.body;
     body.classList.remove('weather-clear', 'weather-rainy', 'weather-clouds', 'weather-snow');
     
-    if (main.includes('rain') || main.includes('drizzle')) body.classList.add('weather-rainy');
-    else if (main.includes('cloud')) body.classList.add('weather-clouds');
-    else if (main.includes('snow')) body.classList.add('weather-snow');
-    else body.classList.add('weather-clear');
+    console.log("Поточна погода (API):", main);
+
+    if (main.includes('rain') || main.includes('drizzle') || main.includes('thunderstorm')) {
+        body.classList.add('weather-rainy');
+    } else if (main.includes('cloud')) {
+        body.classList.add('weather-clouds');
+    } else if (main.includes('snow')) {
+        body.classList.add('weather-snow');
+    } else {
+        body.classList.add('weather-clear');
+    }
 }
 
 // Функція отримання погоди для Києва за замовчуванням
