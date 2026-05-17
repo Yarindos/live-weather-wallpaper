@@ -22,6 +22,11 @@ function updateTimeTheme(hour) {
 async function fetchWeather(lat, lon) {
     try {
         const res = await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${API_KEY}&units=metric&lang=uk`);
+        
+        if (res.status === 401) {
+            throw new Error("API_KEY_NOT_ACTIVE");
+        }
+        
         const data = await res.json();
         
         document.getElementById('city').textContent = data.name;
@@ -31,6 +36,15 @@ async function fetchWeather(lat, lon) {
         applyWeatherEffect(data.weather[0].main.toLowerCase());
     } catch (err) {
         console.error("Помилка отримання погоди:", err);
+        
+        if (err.message === "API_KEY_NOT_ACTIVE") {
+            document.getElementById('city').textContent = "Київ (Демо)";
+            document.getElementById('description').textContent = "API ключ ще не активований (чекайте до 2 год)";
+            document.getElementById('temp').textContent = "15°C";
+            applyWeatherEffect('rain'); // Показуємо дощ для тесту
+        } else {
+            document.getElementById('city').textContent = "Помилка зв'язку";
+        }
     }
 }
 
