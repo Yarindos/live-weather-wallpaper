@@ -55,8 +55,8 @@ body, html { width: 100%; height: 100%; overflow: hidden; font-family: 'Segoe UI
     bottom: -5px; width: 100%; height: 45%;
     z-index: 10;
 }
-.mtn-back { fill: var(--mtn-back); transition: fill 3s; }
-.mtn-mid { fill: var(--mtn-mid); transition: fill 3s; }
+.mtn-back { fill: var(--mtn-back); filter: blur(2px); transition: fill 3s; }
+.mtn-mid { fill: var(--mtn-mid); filter: blur(1px); transition: fill 3s; }
 .mtn-front { fill: var(--mtn-front); transition: fill 3s; }
 
 /* Хмари */
@@ -91,83 +91,17 @@ body, html { width: 100%; height: 100%; overflow: hidden; font-family: 'Segoe UI
 .clock { font-size: 10rem; font-weight: 800; letter-spacing: -5px; line-height: 1; }
 .weather-info { font-size: 1.8rem; margin-top: 10px; font-weight: 300; letter-spacing: 1px; }
 
-/* Погодні ефекти: Реалістичний дощ */
-.weather-overlay {
+/* Погодні ефекти (Canvas) */
+#weather-canvas {
     position: absolute;
     top: 0; left: 0;
     width: 100%; height: 100%;
     pointer-events: none;
     z-index: 15;
-    overflow: hidden;
-}
-
-.rain {
-    position: absolute;
-    width: 100%; height: 100%;
-    display: none;
-}
-
-.weather-rainy .rain { display: block; }
-
-/* Три шари дощу для ефекту паралаксу та глибини */
-.rain::before, .rain::after, .rain-layer-3 {
-    content: '';
-    position: absolute;
-    top: -100%; left: -10%;
-    width: 120%; height: 200%;
-    background-repeat: repeat;
-}
-
-/* Передній план: великі швидкі краплі */
-.rain::after {
-    background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI1IiBoZWlnaHQ9IjQwIj48bGluZSB4MT0iMi41IiB5MT0iMCIgeDI9IjIuNSIgeTI9IjQwIiBzdHJva2U9InJnYmEoMjU1LDI1NSwyNTUsMC40KSIgc3Ryb2tlLXdpZHRoPSIyIi8+PC9zdmc+');
-    animation: rain-fall 0.5s linear infinite;
-    filter: blur(1px);
-    z-index: 3;
-}
-
-/* Середній план */
-.rain::before {
-    background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzIiBoZWlnaHQ9IjMwIj48bGluZSB4MT0iMS41IiB5MT0iMCIgeDI9IjEuNSIgeTI9IjMwIiBzdHJva2U9InJnYmEoMjU1LDI1NSwyNTUsMC4yKSIgc3Ryb2tlLXdpZHRoPSIxLjUiLz48L3N2Zz4=');
-    animation: rain-fall 0.8s linear infinite;
-    opacity: 0.6;
-    z-index: 2;
-}
-
-/* Дальній план: дрібний дощ */
-.rain-layer-3 {
-    background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyIiBoZWlnaHQ9IjIwIj48bGluZSB4MT0iMSIgeTE9IjAiIHgyPSIxIiB5Mj0iMjAiIHN0cm9rZT0icmdiYSgyNTUsMjU1LDI1NSwwLjEpIiBzdHJva2Utd2lkdGg9IjEiLz48L3N2Zz4=');
-    animation: rain-fall 1.2s linear infinite;
-    filter: blur(2px);
-    opacity: 0.4;
-    z-index: 1;
-}
-
-@keyframes rain-fall {
-    from { transform: translateY(0) rotate(10deg); }
-    to { transform: translateY(500px) rotate(10deg); }
-}
-
-/* Ефект туману при дощі */
-.weather-rainy::after {
-    content: '';
-    position: absolute;
-    top: 0; left: 0;
-    width: 100%; height: 100%;
-    background: rgba(100, 110, 130, 0.2);
-    backdrop-filter: blur(2px);
-    pointer-events: none;
-    z-index: 12;
-    animation: fog-drift 10s ease-in-out infinite alternate;
-}
-
-@keyframes fog-drift {
-    from { opacity: 0.2; }
-    to { opacity: 0.4; }
 }
 
 /* Спалахи блискавки */
-.weather-thunderstorm .lightning-flash {
+.lightning-flash {
     position: absolute;
     top: 0; left: 0;
     width: 100%; height: 100%;
@@ -177,12 +111,10 @@ body, html { width: 100%; height: 100%; overflow: hidden; font-family: 'Segoe UI
     pointer-events: none;
 }
 .lightning-active {
-    animation: flash 0.2s ease-out;
+    animation: flash 0.15s ease-out;
 }
 @keyframes flash {
     0% { opacity: 0; }
-    50% { opacity: 0.8; }
+    50% { opacity: 0.7; }
     100% { opacity: 0; }
 }
-
-
