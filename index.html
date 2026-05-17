@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Живі Шпалери Погоди</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="time-day weather-clear">
+    <div class="landscape">
+        <!-- Небо та Зірки -->
+        <div class="sky">
+            <div class="stars"></div>
+            <div class="sun-moon"></div>
+        </div>
+
+        <!-- Хмари -->
+        <div class="clouds-container">
+            <div class="cloud cloud-1"></div>
+            <div class="cloud cloud-2"></div>
+            <div class="cloud cloud-3"></div>
+        </div>
+
+        <!-- Погодні ефекти -->
+        <div class="weather-overlay">
+            <div class="rain"></div>
+            <div class="snow"></div>
+        </div>
+
+        <!-- Гори (SVG) -->
+        <svg class="mountains" viewBox="0 0 1200 400" preserveAspectRatio="none">
+            <path class="mtn-back" d="M0,400 L0,300 L150,200 L300,300 L450,150 L600,300 L750,200 L900,350 L1050,200 L1200,350 L1200,400 Z" />
+            <path class="mtn-mid" d="M0,400 L0,350 L200,250 L400,380 L600,280 L800,380 L1000,250 L1200,380 L1200,400 Z" />
+            <path class="mtn-front" d="M0,400 L0,380 L300,320 L600,390 L900,310 L1200,390 L1200,400 Z" />
+        </svg>
+
+        <!-- Інтерфейс -->
+        <div class="ui">
+            <div class="clock" id="clock">00:00</div>
+            <div class="weather-info">
+                <span id="city">Визначаємо місто...</span>
+                <span id="temp">--°C</span>
+                <span id="description">Завантаження...</span>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
