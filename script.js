@@ -50,19 +50,43 @@ async function fetchWeather(lat, lon) {
 
 function applyWeatherEffect(main) {
     const body = document.body;
-    body.classList.remove('weather-clear', 'weather-rainy', 'weather-clouds', 'weather-snow');
+    body.classList.remove('weather-clear', 'weather-rainy', 'weather-clouds', 'weather-snow', 'weather-thunderstorm');
     
     console.log("Поточна погода (API):", main);
 
-    if (main.includes('rain') || main.includes('drizzle') || main.includes('thunderstorm')) {
+    if (main.includes('thunderstorm')) {
+        body.classList.add('weather-rainy', 'weather-thunderstorm');
+        startLightning();
+    } else if (main.includes('rain') || main.includes('drizzle')) {
         body.classList.add('weather-rainy');
+        stopLightning();
     } else if (main.includes('cloud')) {
         body.classList.add('weather-clouds');
+        stopLightning();
     } else if (main.includes('snow')) {
         body.classList.add('weather-snow');
+        stopLightning();
     } else {
         body.classList.add('weather-clear');
+        stopLightning();
     }
+}
+
+let lightningInterval;
+function startLightning() {
+    if (lightningInterval) return;
+    const flash = document.querySelector('.lightning-flash');
+    lightningInterval = setInterval(() => {
+        if (Math.random() > 0.9) {
+            flash.classList.add('lightning-active');
+            setTimeout(() => flash.classList.remove('lightning-active'), 200);
+        }
+    }, 1000);
+}
+
+function stopLightning() {
+    clearInterval(lightningInterval);
+    lightningInterval = null;
 }
 
 // Функція отримання погоди для Києва за замовчуванням
